@@ -201,8 +201,12 @@ class ProxyNovaCom(SoupProvider):
         port = ''.join(td_tags[1].stripped_strings or '')
         matchs = SIMPLE_IP_PATTERN.search(script)
         if matchs is None:
-            self.logger.warning('Invalid script value for item {}'.format(item))
-            return None
+            # IP address cleanup
+            matchs = re.compile(r'(?<=document.write\(")([\d\s.+"]+)(?:\);)').search(script)
+            matchs = SIMPLE_IP_PATTERN.search(re.sub('[^\d.]', '', matchs.group() if matchs else ''))
+            if matchs is None:
+                self.logger.warning('Invalid script value for item {}'.format(item))
+                return None
         img = item.find('img', class_='flag')
         country = None
         if img is None or 'alt' not in img.attrs:
