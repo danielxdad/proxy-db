@@ -52,6 +52,22 @@ PROXY_NOVA_HTML = """
         </a>
     </td>
 </tr>
+<tr data-proxy-id="00000000">
+    <td align="left">
+        <abbr title="proxy.site.name">
+            <script>document.write("41." + "65." + "2" + "36" + ".56");</script>
+        </abbr>
+    </td>
+    <td align="left">
+        8080
+    </td>
+    <td align="left">
+        <img src="/assets/images/blank.gif" class="flag flag-hu inline-block align-middle" alt="hu">
+        <a href="/proxy-server-list/country-hu/" title="Proxies from Hungary">Hungary
+            <span class="proxy-city"> - Debrecen </span>
+        </a>
+    </td>
+</tr>
 """
 PROXY_NOVA_INVALID_ROWS_HTML = """
 <tr data-proxy-id="00000000">
@@ -215,6 +231,7 @@ class TestProxyNovaCom(unittest.TestCase):
         self.assertEqual(provider.find_page_proxies(request), [
             {'proxy': '91.217.28.125:3128', 'country_code': 'UA'},
             {'proxy': '89.145.199.64:8080', 'country_code': 'HU'},
+            {'proxy': '41.65.236.56:8080', 'country_code': 'HU'},
         ])
 
     @patch("proxy_db.providers.getLogger")
